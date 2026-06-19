@@ -1,5 +1,10 @@
 package com.example.Services;
 
-public interface FacultadService {
+import java.util.List;
 
+import com.example.entities.Facultad;
+
+public interface FacultadService {
+    void saveFacultad(Facultad facultad);
+    List<Facultad> getAllFacultades();
 }

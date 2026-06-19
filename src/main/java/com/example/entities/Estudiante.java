@@ -35,8 +35,6 @@ import lombok.Setter;
 @Builder
 public class Estudiante {
 
-     private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy =GenerationType.IDENTITY)
     private int id;
@@ -60,6 +58,6 @@ public class Estudiante {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "estudiante")
     @Builder.Default
-    private Set<Correo> emails = new HashSet<>();
+    private Set<Correo> correos = new HashSet<>();
 
 }

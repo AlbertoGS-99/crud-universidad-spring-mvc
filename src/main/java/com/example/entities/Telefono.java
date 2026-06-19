@@ -9,16 +9,18 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name="telefonos")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
 public class Telefono {
-
-     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy =GenerationType.IDENTITY)
@@ -27,6 +29,6 @@ public class Telefono {
     private String numero;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Estudiante estudiantes;
+    private Estudiante estudiante;
  
 }

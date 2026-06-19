@@ -1,5 +1,10 @@
 package com.example.Services;
 
-public interface EstudianteService {
+import java.util.List;
 
+import com.example.entities.Estudiante;
+
+public interface EstudianteService {
+    void saveEstudiante(Estudiante estudiante);
+    List<Estudiante> getAllEstudiantes();
 }
