@@ -1,5 +1,6 @@
 package com.example.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,47 +30,50 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import lombok.ToString;
 
 @Entity
-@Table(name="estudiantes")
+@Table(name ="estudiantes")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 @Builder
-public class Estudiante {
+public class Estudiante implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy =GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-
-    @NotNull(message = "El nombre no puede estar vacio")
-	@NotBlank(message = "El nombre no puede contener espacios en blanco, solamente")
-	@Size(min = 4, max = 30, message = "El nombre tiene que estar entre 4 y 30 caracteres")
+    @NotNull(message = "El campo nombre no puede estar vacio")
+    @NotBlank(message = "El campo nombre no puede contener unicamente espacios en blanco")
+    @Size(min = 4, max = 30, message = "El nombre no cumple los requisitos (minimo 4 y maximo 30 caracteres)")
     @Pattern(regexp = "^([A-ZÁÉÍÓÚÑ][a-záéíóúüñ]+(\s)?)+$", message = "El nombre solo puede contener los caracteres de la A a la Z y su primer caracter a de ser una letra mayuscula (A-Z)")
     private String nombre;
 
-    @NotNull(message = "El primer apellido no puede estar vacio")
-	@NotBlank(message = "El primer apellido no puede contener espacios en blanco, solamente")
-	@Size(min = 4, max = 30, message = "El primer apellido tiene que estar entre 4 y 30 caracteres")
-    @Pattern(regexp = "^([A-ZÁÉÍÓÚÑ][a-záéíóúüñ]+(\s)?)+$", message = "El primer apellido solo puede contener los caracteres de la A a la Z y su primer caracter a de ser una letra mayuscula (A-Z)")
+    @NotNull(message = "El campo Primer Apellido no puede estar vacio")
+    @NotBlank(message = "El campo Primer Apellido no puede contener unicamente espacios en blanco")
+    @Size(min = 4, max = 30, message = "El Primer Apellido no cumple los requisitos (minimo 4 y maximo 30 caracteres)")
+    @Pattern(regexp = "^([A-ZÁÉÍÓÚÑ][a-záéíóúüñ]+(\s)?)+$", message = "El Primer Apellido solo puede contener los caracteres de la A a la Z y su primer caracter a de ser una letra mayuscula (A-Z)")
     private String primerApellido;
 
-    @NotNull(message = "El segundo apellido no puede estar vacio")
-	@NotBlank(message = "El segundo apellido no puede contener espacios en blanco, solamente")
-	@Size(min = 4, max = 30, message = "El segundo apellido tiene que estar entre 4 y 30 caracteres")
-    @Pattern(regexp = "^([A-ZÁÉÍÓÚÑ][a-záéíóúüñ]+(\s)?)+$", message = "El segundo apellido solo puede contener los caracteres de la A a la Z y su primer caracter a de ser una letra mayuscula (A-Z)")
+    @NotNull(message = "El campo Segundo Apellido no puede contener unicamente espacios en blanco")
+    @Size(max = 30, message = "El Segundo Apellido no cumple los requisitos (minimo 4 y maximo 30 caracteres)")
+    @Pattern(regexp = "^(|[A-ZÁÉÍÓÚÑ][a-záéíóúüñ]{2,}+(\s)?)+$", message = "El Segundo Apellido solo puede contener los caracteres de la A a la Z y su primer caracter a de ser una letra mayuscula (A-Z)")
     private String segundoApellido;
+
 
     @Enumerated(EnumType.STRING)
     private Genero genero;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @FutureOrPresent(message = "La fecha de Matriculacion no puede ser inferior a la fecha actual")
-    private LocalDate FechadeMatriculacionFacultad;
 
+    @DateTimeFormat(pattern ="yyyy-MM-dd")
+    @FutureOrPresent(message = "La fecha de Matriculacion no puede ser inferior a la fecha actual")
+    private LocalDate fechaMatriculacion;
+    
     @ManyToOne(fetch = FetchType.LAZY)
     private Facultad facultad;
 
@@ -81,7 +85,6 @@ public class Estudiante {
     @Builder.Default
     private Set<Correo> correos = new HashSet<>();
 
-    // Nombre de archivo de la foto asociada al estudiante (opcional)
     private String foto;
 
 }

@@ -5,8 +5,12 @@ import java.util.List;
 import com.example.entities.Estudiante;
 
 public interface EstudianteService {
-    void saveEstudiante(Estudiante estudiante);
+
     List<Estudiante> getAllEstudiantes();
     Estudiante getEstudianteById(int id);
+    Estudiante saveEstudiante(Estudiante estudiante);
     void deleteEstudianteById(int id);
+    void deleteEstudiante(Estudiante estudiante);
+    Estudiante updateEstudiante(Estudiante estudiante);
+
 }

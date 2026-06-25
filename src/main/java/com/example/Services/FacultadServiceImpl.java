@@ -1,5 +1,6 @@
 package com.example.Services;
 
+
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -12,15 +13,21 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class FacultadServiceImpl implements FacultadService {
-	private final Facultaddao facultaddao;
+    
+    private final Facultaddao facultadDao;
+    
+    @Override
+    public List<Facultad> getAllFacultades() {
 
-	@Override
-	public void saveFacultad(Facultad facultad) {
-		facultaddao.save(facultad);
-	}
+        return facultadDao.findAll();
+    
+    }
 
-	@Override
-	public List<Facultad> getAllFacultades() {
-		return facultaddao.findAll();
-	}
+    @Override
+    public Facultad saveFacultad(Facultad facultad) {
+
+        return facultadDao.save(facultad);
+
+    }
+
 }

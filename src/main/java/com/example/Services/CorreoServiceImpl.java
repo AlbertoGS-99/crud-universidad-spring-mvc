@@ -8,43 +8,49 @@ import com.example.dao.Correodao;
 import com.example.entities.Correo;
 import com.example.entities.Estudiante;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+
 @RequiredArgsConstructor
 @Service
-
 public class CorreoServiceImpl implements CorreoService {
 
-    private final Correodao correodao;
-
-
-    @Override
-    public Correo savecorreo(Correo correo) {
-        return correodao.save(correo);
-    }
+    private final Correodao correoDao;
 
     @Override
     public List<Correo> getAllCorreos() {
-        return correodao.findAll();
+
+        return correoDao.findAll();
+
     }
 
     @Override
-	public boolean existsByEstudiante(Estudiante estudiante) {
-		return correodao.existsByEstudiante(estudiante);
-	}
+    public Correo saveCorreo(Correo correo) {
 
-	@Override
-	public void deleteByEstudiante(Estudiante estudiante) {
-		correodao.deleteByEstudiante(estudiante);
-	}
+        return correoDao.save(correo);
 
-	@Override
-	public List<Correo> findByEstudiante(Estudiante estudiante) {
-		return correodao.findByEstudiante(estudiante);
-	}
+    }
 
-	@Override
-	public void deleteCorreoById(Integer id) {
-		correodao.deleteById(id);
-	}
+    @Override
+    public boolean existsByEstudiante(Estudiante estudiante) {
+
+        return correoDao.existsByEstudiante(estudiante);
+
+    }
+
+    @Override
+    @Transactional
+    public void deleteByEstudiante(Estudiante estudiante) {
+
+        correoDao.deleteByEstudiante(estudiante);
+    
+    }
+
+    @Override
+    public List<Correo> findByEstudiante(Estudiante estudiante) {
+
+        return correoDao.findByEstudiante(estudiante);
+    
+    }
 
 }

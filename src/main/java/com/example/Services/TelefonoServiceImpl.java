@@ -4,47 +4,55 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-
 import com.example.dao.Telefonodao;
-import com.example.entities.Estudiante;
 import com.example.entities.Telefono;
+
+import jakarta.transaction.Transactional;
+
+import com.example.entities.Estudiante;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
 public class TelefonoServiceImpl implements TelefonoService {
-	
-	private final Telefonodao telefonodao;
+    
+    private final Telefonodao telefonoDao;
 
-	@Override
-	public List<Telefono> getAllTelefonos() {
-		// TODO Auto-generated method stub
-		return telefonodao.findAll();
-	}
+    @Override
+    public List<Telefono> getAllTelefonos() {
 
-	@Override
-	public Telefono saveTelefono(Telefono telefono) {
-		// TODO Auto-generated method stub
-		return telefonodao.save(telefono);
-	}
+        return telefonoDao.findAll();
+    
+    }
 
-	@Override
-	public boolean existsByEstudiante(Estudiante estudiante) {
-		// TODO Auto-generated method stub
-		return telefonodao.existsByEstudiante(estudiante);
-	}
+    @Override
+    public Telefono saveTelefono(Telefono telefono) {
 
-	@Override
-	public void deleteByEstudiante(Estudiante estudiante) {
-		// TODO Auto-generated method stub
-		telefonodao.deleteByEstudiante(estudiante);
-	}
+        return telefonoDao.save(telefono);
+    
+    }
 
-	@Override
-	public List<Telefono> findByEstudiante(Estudiante estudiante) {
-		// TODO Auto-generated method stub
-		return telefonodao.findByEstudiante(estudiante);
-	}
+    @Override
+    public boolean existsByEstudiante(Estudiante estudiante) {
+
+        return telefonoDao.existsByEstudiante(estudiante);
+    
+    }
+
+    @Override
+    @Transactional
+    public void deleteByEstudiante(Estudiante estudiante) {
+
+        telefonoDao.deleteByEstudiante(estudiante);
+    
+    }
+
+    @Override
+    public List<Telefono> findByEstudiante(Estudiante estudiante) {
+
+        return telefonoDao.findByEstudiante(estudiante);
+    
+    }
 
 }

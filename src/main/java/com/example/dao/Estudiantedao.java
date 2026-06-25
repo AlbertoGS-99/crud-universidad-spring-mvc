@@ -6,5 +6,4 @@ import com.example.entities.Estudiante;
 
 public interface Estudiantedao extends JpaRepository<Estudiante, Integer> {
 
-
 }

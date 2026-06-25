@@ -1,42 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1 th:text="'Detalles del estudiante: ' 
-                + ${estudiante.nombre} + ' ' 
-                + ${estudiante.primerApellido} + ' '
-                + ${estudiante.segundoApellido}"></h1>
+    <head>
+        <meta charset="UTF-8">
+        <title>Detalles</title>
+    </head>
 
-    <!-- Mostrar el nombre del Dpto donde trabaja el estudiante             -->
-    <h2 th:text="'Departamento: ' + ${estudiante.departamento.nombre}"></h2>     
-    
-    <!-- Telefonos del estudiante -->
-    <div th:if="${estudiante.telefonos.size() > 0}">
-        <h2>Telefonos: </h2>
-        <ul>
-            <li th:each="telefono : ${estudiante.telefonos}" 
-                th:text="${telefono.numero}"></li>
-        </ul>
-    </div>
+    <body>
+        <h1 th:text="'Detalles del estudiante: '+ ${estudiante.Nombre}+ ' '+ ${estudiante.primerApellido}+ ' ' + ${estudiante.segundoApellido}"></h1>
+        <h2 th:text="'Facultad: '+ ${estudiante.facultad.Nombre}"></h2>
 
-    <!-- Correos del estudiante -->
-    <div th:if="${estudiante.emails.size() > 0}">
-        <h2>Correos: </h2>
-        <ul>
-            <li th:each="email : ${estudiante.emails}"
-                th:text="${email.email}"></li>
-        </ul>
+        <div th:if="${estudiante.correos.size > 0}">
+            <h2>Correos</h2>
+            <ul>
+                <li th:each="correo : ${estudiante.correos}" th:text="${correo.direccion}"></li>
+            </ul>
+        </div>
 
-    </div> 
+        <div th:if="${estudiante.telefonos.size > 0}">
+            <h2>Telefonos</h2>
+            <ul>
+                <li th:each="telefono : ${estudiante.telefonos}" th:text="${telefono.numero}"></li>
+            </ul>
+        </div>
 
-    <!-- Foto del estudiante -->
-    <div th:if="${estudiante.foto != null}">
-        <h2>Foto: </h2>
-        <img th:src="@{/imagenes/}+${estudiante.foto}" alt="Foto del Estudiante">
-    </div> 
-</body>
+        <div th:if="${estudiante.foto != null}">
+            <h2>Foto del Empleado</h2>
+            <img th:src ="@{/imagenes/} + ${estudiante.foto}">
+        </div>
+
+        <a th:href="@{/estudiantes/listar}">Volver</a>
+    </body>
 </html>

@@ -7,18 +7,10 @@ import com.example.entities.Estudiante;
 
 public interface CorreoService {
 
-    Correo savecorreo(Correo correo);
-
     List<Correo> getAllCorreos();
-
-    void deleteCorreoById(Integer id);
-
+    Correo saveCorreo(Correo correo);
     boolean existsByEstudiante(Estudiante estudiante);
-
+    void deleteByEstudiante(Estudiante estudiante);
     List<Correo> findByEstudiante(Estudiante estudiante);
 
-    void deleteByEstudiante(Estudiante estudiante);
-
-    
-   
 }
