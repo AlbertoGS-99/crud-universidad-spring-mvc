@@ -19,6 +19,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,14 +44,30 @@ public class Estudiante {
     @GeneratedValue(strategy =GenerationType.IDENTITY)
     private int id;
 
+
+    @NotNull(message = "El nombre no puede estar vacio")
+	@NotBlank(message = "El nombre no puede contener espacios en blanco, solamente")
+	@Size(min = 4, max = 30, message = "El nombre tiene que estar entre 4 y 30 caracteres")
+    @Pattern(regexp = "^([A-ZÁÉÍÓÚÑ][a-záéíóúüñ]+(\s)?)+$", message = "El nombre solo puede contener los caracteres de la A a la Z y su primer caracter a de ser una letra mayuscula (A-Z)")
     private String nombre;
+
+    @NotNull(message = "El primer apellido no puede estar vacio")
+	@NotBlank(message = "El primer apellido no puede contener espacios en blanco, solamente")
+	@Size(min = 4, max = 30, message = "El primer apellido tiene que estar entre 4 y 30 caracteres")
+    @Pattern(regexp = "^([A-ZÁÉÍÓÚÑ][a-záéíóúüñ]+(\s)?)+$", message = "El primer apellido solo puede contener los caracteres de la A a la Z y su primer caracter a de ser una letra mayuscula (A-Z)")
     private String primerApellido;
+
+    @NotNull(message = "El segundo apellido no puede estar vacio")
+	@NotBlank(message = "El segundo apellido no puede contener espacios en blanco, solamente")
+	@Size(min = 4, max = 30, message = "El segundo apellido tiene que estar entre 4 y 30 caracteres")
+    @Pattern(regexp = "^([A-ZÁÉÍÓÚÑ][a-záéíóúüñ]+(\s)?)+$", message = "El segundo apellido solo puede contener los caracteres de la A a la Z y su primer caracter a de ser una letra mayuscula (A-Z)")
     private String segundoApellido;
 
     @Enumerated(EnumType.STRING)
     private Genero genero;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @FutureOrPresent(message = "La fecha de Matriculacion no puede ser inferior a la fecha actual")
     private LocalDate FechadeMatriculacionFacultad;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -59,5 +80,8 @@ public class Estudiante {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "estudiante")
     @Builder.Default
     private Set<Correo> correos = new HashSet<>();
+
+    // Nombre de archivo de la foto asociada al estudiante (opcional)
+    private String foto;
 
 }
