@@ -68,8 +68,8 @@ public class EstudianteController {
 		@Valid
 		@ModelAttribute Estudiante estudiante,
 		BindingResult result,
-		@RequestParam(name = "numerosTelefono") String numerosTelefono, 
-		@RequestParam(name = "direccionesCorreo") String direccionesCorreo,
+		@RequestParam(name = "numerosTelefono", required = false, defaultValue = "") String numerosTelefono, 
+		@RequestParam(name = "direccionesCorreo", required = false, defaultValue = "") String direccionesCorreo,
 		Model model,
 		@RequestParam(name = "file", required = false) MultipartFile file) {
         
@@ -109,14 +109,20 @@ public class EstudianteController {
 
 		if(!numerosTelefono.isEmpty() && !numerosTelefono.isBlank()){
 			String[] arraynumTlf = numerosTelefono.split(";");
-			List<String> listadoNumeros = Arrays.asList(arraynumTlf);
+			List<String> listadoNumeros = Arrays.stream(arraynumTlf)
+				.map(String::trim)
+				.filter(numero -> !numero.isBlank())
+				.toList();
 			listadoNumeros.forEach(numero -> {numerostlf.add(Telefono.builder().numero(numero).estudiante(estudiante).build());});
 			estudiante.setTelefonos(numerostlf);
 		}
 
 		if(!direccionesCorreo.isEmpty() && !direccionesCorreo.isBlank()){
 			String[] email = direccionesCorreo.split(";");
-			List<String> listadoCorreos = Arrays.asList(email);
+			List<String> listadoCorreos = Arrays.stream(email)
+				.map(String::trim)
+				.filter(correo -> !correo.isBlank())
+				.toList();
 			listadoCorreos.forEach(correo -> {dirCorreos.add(Correo.builder().direccion(correo).estudiante(estudiante).build());});
 			estudiante.setCorreos(dirCorreos);
 		}
@@ -137,13 +143,13 @@ public class EstudianteController {
         return "redirect:/estudiantes/listar";
     }
     
-	@GetMapping("/details/{id}")
+	@GetMapping("/detalles/{id}")
 	public String detallesEstudiante(Model model,
 		@PathVariable(name = "id", required = true) int estudiante_id) {
 
 		model.addAttribute("estudiante", estudianteService.getEstudianteById(estudiante_id));
 
-		return "details";
+		return "detalles";
 
 	}
 

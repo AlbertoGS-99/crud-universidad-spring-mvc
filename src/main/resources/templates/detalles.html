@@ -6,8 +6,8 @@
     </head>
 
     <body>
-        <h1 th:text="'Detalles del estudiante: '+ ${estudiante.Nombre}+ ' '+ ${estudiante.primerApellido}+ ' ' + ${estudiante.segundoApellido}"></h1>
-        <h2 th:text="'Facultad: '+ ${estudiante.facultad.Nombre}"></h2>
+        <h1 th:text="'Detalles del estudiante: '+ ${estudiante.nombre}+ ' '+ ${estudiante.primerApellido}+ ' ' + ${estudiante.segundoApellido}"></h1>
+        <h2 th:text="'Facultad: '+ ${estudiante.facultad.nombre}"></h2>
 
         <div th:if="${estudiante.correos.size > 0}">
             <h2>Correos</h2>

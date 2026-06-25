@@ -94,7 +94,7 @@ public class CrudEstudiantesSpringMvcApplication implements CommandLineRunner {
 			.facultad(facultad4)
 			.correos(Set.of(
 				Correo.builder()
-					.direccion("hg@out.com")
+					.direccion("hg2@out.com")
 					.build(),	
 				Correo.builder()
 					.direccion("hg@out.com")
