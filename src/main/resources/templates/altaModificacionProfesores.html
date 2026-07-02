@@ -9,95 +9,99 @@
 </head>
 
 <body>
-
-    <h1>Alta / modificación de profesor</h1>
-
-    <div class="card">
+    <h1>Formulario de Alta o Modificacion</h1>
+    <fieldset>
+        <legend>Formulario</legend>
         <form th:action="@{/profesores/persistir}" method="post" th:object="${profesor}" enctype="multipart/form-data">
-
             <input type="hidden" th:field="*{id}">
+            <div class="card">
+                <form th:action="@{/profesores/persistir}" method="post" th:object="${profesor}"
+                    enctype="multipart/form-data">
 
-            <div class="two-col">
-                <div class="field">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ej. Ana" required>
-                    <p th:if="${#fields.hasErrors('nombre')}" th:class="${#fields.hasErrors('nombre')} ? error"
-                        th:errors="*{nombre}">Nombre inválido</p>
-                </div>
-                <div class="field">
-                    <label for="primerApellido">Primer apellido</label>
-                    <input type="text" id="primerApellido" th:field="*{primerApellido}" placeholder="Ej. García"
-                        required>
-                    <p th:if="${#fields.hasErrors('primerApellido')}"
-                        th:class="${#fields.hasErrors('primerApellido')} ? error" th:errors="*{primerApellido}">Apellido
-                        inválido</p>
-                </div>
+                    <input type="hidden" th:field="*{id}">
+
+                    <div class="two-col">
+                        <div class="field">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ej. Ana" required>
+                            <p th:if="${#fields.hasErrors('nombre')}" th:class="${#fields.hasErrors('nombre')} ? error"
+                                th:errors="*{nombre}">Nombre inválido</p>
+                        </div>
+                        <div class="field">
+                            <label for="primerApellido">Primer apellido</label>
+                            <input type="text" id="primerApellido" th:field="*{primerApellido}" placeholder="Ej. García"
+                                required>
+                            <p th:if="${#fields.hasErrors('primerApellido')}"
+                                th:class="${#fields.hasErrors('primerApellido')} ? error" th:errors="*{primerApellido}">
+                                Apellido
+                                inválido</p>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="segundoApellido">Segundo apellido
+                            <span class="optional">(opcional)</span>
+                        </label>
+                        <input type="text" id="segundoApellido" th:field="*{segundoApellido}" placeholder="Ej. López">
+                        <p th:if="${#fields.hasErrors('segundoApellido')}"
+                            th:class="${#fields.hasErrors('segundoApellido')} ? error" th:errors="*{segundoApellido}">
+                            Apellido
+                            inválido</p>
+                    </div>
+
+
+                    <div class="two-col">
+                        <div class="field">
+                            <label for="fechadeAltaenlaFacultad">Fecha de Alta en la Facultad</label>
+                            <input type="date" id="fechadeAltaenlaFacultad" th:field="*{fechadeAltaenlaFacultad}">
+                            <p th:if="${#fields.hasErrors('fechadeAltaenlaFacultad')}"
+                                th:class="${#fields.hasErrors('fechadeAltaenlaFacultad')} ? error"
+                                th:errors="*{fechadeAltaenlaFacultad}">Fecha inválida</p>
+                        </div>
+
+
+
+                        <div class="field">
+                                    <fieldset>
+                                        <legend>Genero</legend>
+                                        <label for="hombre">Hombre</label><input type="radio" name="genero" id="hombre"
+                                            value="HOMBRE" th:field="*{genero}">
+                                        <br>
+                                        <label for="mujer">Mujer</label><input type="radio" name="genero" id="mujer"
+                                            value="MUJER" th:field="*{genero}">
+                                        <br>
+                                        <label for="otro">Otro</label><input type="radio" name="genero" id="otro"
+                                            value="OTRO" th:field="*{genero}">
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="facultades">Facultad</label>
+                                <select id="facultades" name="facultad" th:field="*{facultad}">
+                                    <option th:each="facultad : ${facultades}" th:value="${facultad.id}"
+                                        th:text="${facultad.nombre}"></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="salario">Salario:</label>
+                            <input type="text" id="salario" name="salario" th:field="*{salario}">
+                        </div>
+
+                        <div>
+                            <label for="file">Imagen del profesor</label>
+                            <br>
+                            <input type="file" id="file" name="file" title="Seleccione la imagen del profesor"
+                                th:value="${foto}">
+                        </div>
+                        <div th:if="${profesor.fotodelProfesor != null}">
+                            <img th:src="@{/imagenes/} + ${profesor.fotodelProfesor}">
+                        </div>
+
+                        <input type="submit" value="Alta/Modificacion">
+                </form>
             </div>
-
-            <div class="field">
-                <label for="segundoApellido">Segundo apellido
-                    <span class="optional">(opcional)</span>
-                </label>
-                <input type="text" id="segundoApellido" th:field="*{segundoApellido}" placeholder="Ej. López">
-                <p th:if="${#fields.hasErrors('segundoApellido')}"
-                    th:class="${#fields.hasErrors('segundoApellido')} ? error" th:errors="*{segundoApellido}">Apellido
-                    inválido</p>
-            </div>
-
-
-            <div class="two-col">
-                <div class="field">
-                    <label for="fechadeAltaenlaFacultad">Fecha de Alta en la Facultad</label>
-                    <input type="date" id="fechadeAltaenlaFacultad" th:field="*{fechadeAltaenlaFacultad}">
-                    <p th:if="${#fields.hasErrors('fechadeAltaenlaFacultad')}"
-                        th:class="${#fields.hasErrors('fechadeAltaenlaFacultad')} ? error"
-                        th:errors="*{fechadeAltaenlaFacultad}">Fecha inválida</p>
-                </div>
-                <div class="field">
-                    <label for="facultades">Facultad</label>
-                    <select id="facultades" name="facultad" th:field="*{facultad}">
-                        <option th:each="facultad : ${facultades}" th:value="${facultad.id}"
-                            th:text="${facultad.nombre}"></option>
-                    </select>
-                </div>
-            </div>
-
-
-            <div class="field">
-                <div class="section-label">Género</div>
-                <div class="radio-group">
-                    <label class="radio-item">
-                        <input type="radio" name="genero" id="hombre" value="HOMBRE" th:field="*{genero}"> Hombre
-                    </label>
-                    <label class="radio-item">
-                        <input type="radio" name="genero" id="mujer" value="MUJER" th:field="*{genero}"> Mujer
-                    </label>
-                    <label class="radio-item">
-                        <input type="radio" name="genero" id="otro" value="OTRO" th:field="*{genero}"> Otro
-                    </label>
-                </div>
-            </div>
-
-            <div>
-                <label for="salario">Salario:</label>
-                <input type="text" id="salario" name="salario" th:field="*{salario}">
-            </div>
-
-            <hr class="divider">
-
-
-            <div>
-                <label for="file">Imagen del profesor</label>
-                <br>
-                <input type="file" id="file" name="file" title="Seleccione la imagen del profesor" th:value="${foto}">
-            </div>
-            <div th:if="${profesor.fotodelProfesor != null}">
-                <img th:src="@{/imagenes/} + ${profesor.fotodelProfesor}">
-            </div>
-
-            <input type="submit" value="Alta/Modificacion">
-        </form>
-    </div>
 
 </body>
 
