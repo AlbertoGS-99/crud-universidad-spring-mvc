@@ -8,21 +8,20 @@ import java.util.logging.Logger;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.entities.Profesor;
-import com.example.Services.ProfesorService;
 import com.example.Services.FacultadService;
+import com.example.Services.ProfesorService;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.PostMapping;
+
 
 
 @Controller
@@ -30,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/profesores")
 public class ProfesorController {
 
-    private static final Logger LOG = Logger.getLogger("ProfesorController");
+    private static final Logger LOG = Logger.getLogger("EstudianteController");
 
     private final ProfesorService profesorService;
     private final FacultadService facultadService;
@@ -40,11 +39,12 @@ public class ProfesorController {
 
         model.addAttribute("profesores", profesorService.getAllProfesores());
 
-		return "listadoProfesores";
+        return "listadoProfesores";
+
     }
     
     @GetMapping("/alta")
-    public String mostrarFormularioAlta(Model model,
+    public String mostrarformularioAlta(Model model,
         @ModelAttribute Profesor profesor) {
         
         model.addAttribute("facultades", facultadService.getAllFacultades());
@@ -52,21 +52,11 @@ public class ProfesorController {
         return "altaModificacionProfesores";
     }
     
-	@PostMapping("/persistir")
-	public String procesarFormularioAltaModificacion(
-		@Valid
-		@ModelAttribute Profesor profesor,
-		BindingResult result,
-		Model model,
-		@RequestParam(name = "file", required = false) MultipartFile file) {
-        
-        if (result.hasErrors()) {
-
-            model.addAttribute("facultades", facultadService.getAllFacultades());
-            
-            return "altaModificacionProfesores";
-
-        }
+    @PostMapping("/persistir")
+    public String procesarFormularioAltaModificacion(
+        @ModelAttribute Profesor profesor,
+        Model model,
+        @RequestParam(name = "file", required = false) MultipartFile file) {
 
         if (file != null && !file.isEmpty()) {
 			
@@ -84,36 +74,42 @@ public class ProfesorController {
 				e.printStackTrace();
 			}
 
+		}else if(profesor.getId() != 0){
+
+			Profesor profesorAntiguo = profesorService.getProfesorById(profesor.getId());
+			profesor.setFotodelProfesor(profesorAntiguo.getFotodelProfesor());
 		}
 
-		LOG.info("Profesor recibido :");
+        LOG.info("Profesor recibido :");
 		LOG.info(profesor.toString());
 
         profesorService.saveProfesor(profesor);
-
+        
         return "redirect:/profesores/listar";
     }
     
-	@GetMapping("/detalles/{id}")
-	public String detallesProfesor(Model model,
+    @GetMapping("/detalles/{id}")
+    public String detallesProfesor(Model model,
 		@PathVariable(name = "id", required = true) int profesor_id) {
 
 		model.addAttribute("profesor", profesorService.getProfesorById(profesor_id));
 
-		return "detalles";
+		return "detallesProfesor";
 
 	}
-
+    
     @GetMapping("/update/{id}")
-	public String actualizarProfesor(Model model,
+    public String actualizarEmpleado(Model model,
 		@PathVariable(name = "id", required = true) int profesor_id) {
 
-		Profesor profesor = profesorService.getProfesorById(profesor_id);
+        Profesor profesor = profesorService.getProfesorById(profesor_id);
 
-		model.addAttribute("profesor", profesor);
-		model.addAttribute("facultades",facultadService.getAllFacultades());
+        model.addAttribute("profesor", profesor);
+        model.addAttribute("facultades", facultadService.getAllFacultades());
 
-		String foto = profesor.getFotodelProfesor();
+        String foto = profesor.getFotodelProfesor();
+
+        LOG.info("foto "+ foto);
 
 		if (foto != null) {
 			
@@ -121,16 +117,17 @@ public class ProfesorController {
 
 		}
 
-		return "altaModificacionProfesores";
-	}
+        return "altaModificacionProfesores";
 
+    }
+    
     @GetMapping("/delete/{id}")
-	public String deleteProfesor(Model model,
+    public String deleteEstudiante(Model model,
 		@PathVariable(name = "id", required = true) int profesor_id) {
 
         Profesor profesor = profesorService.getProfesorById(profesor_id);
 
-		String foto = profesor.getFotodelProfesor();
+        String foto = profesor.getFotodelProfesor();
 
 		Path relativePath = Paths.get("src/main/resources/static/imagenes/");
 		String absolutePath = relativePath.toFile().getAbsolutePath();
@@ -140,7 +137,7 @@ public class ProfesorController {
 			try {
 				Files.delete(completePath);
 			} catch (IOException e) {
-				
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -149,6 +146,7 @@ public class ProfesorController {
 
 		return "redirect:/profesores/listar";
 
-	}
+    }
+    
 
 }

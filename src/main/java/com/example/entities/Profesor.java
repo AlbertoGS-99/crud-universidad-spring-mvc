@@ -45,21 +45,9 @@ public class Profesor implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotNull(message = "El campo nombre no puede estar vacio")
-    @NotBlank(message = "El campo nombre no puede contener unicamente espacios en blanco")
-    @Size(min = 4, max = 30, message = "El nombre no cumple los requisitos (minimo 4 y maximo 30 caracteres)")
-    @Pattern(regexp = "^([A-ZÁÉÍÓÚÑ][a-záéíóúüñ]+(\s)?)+$", message = "El nombre solo puede contener los caracteres de la A a la Z y su primer caracter a de ser una letra mayuscula (A-Z)")
+    
     private String nombre;
-
-    @NotNull(message = "El campo Primer Apellido no puede estar vacio")
-    @NotBlank(message = "El campo Primer Apellido no puede contener unicamente espacios en blanco")
-    @Size(min = 4, max = 30, message = "El Primer Apellido no cumple los requisitos (minimo 4 y maximo 30 caracteres)")
-    @Pattern(regexp = "^([A-ZÁÉÍÓÚÑ][a-záéíóúüñ]+(\s)?)+$", message = "El Primer Apellido solo puede contener los caracteres de la A a la Z y su primer caracter a de ser una letra mayuscula (A-Z)")
     private String primerApellido;
-
-    @NotNull(message = "El campo Segundo Apellido no puede contener unicamente espacios en blanco")
-    @Size(max = 30, message = "El Segundo Apellido no cumple los requisitos (minimo 4 y maximo 30 caracteres)")
-    @Pattern(regexp = "^(|[A-ZÁÉÍÓÚÑ][a-záéíóúüñ]{2,}+(\s)?)+$", message = "El Segundo Apellido solo puede contener los caracteres de la A a la Z y su primer caracter a de ser una letra mayuscula (A-Z)")
     private String segundoApellido;
 
    
@@ -69,10 +57,9 @@ public class Profesor implements Serializable {
 
 
     @DateTimeFormat(pattern ="yyyy-MM-dd")
-    @FutureOrPresent(message = "La fecha de alta en la facultad no puede ser posterior a la fecha actual")
     private LocalDate fechadeAltaenlaFacultad;
 
-    @NotNull(message = "El campo salario no puede estar vacio")
+    
     private BigDecimal salario;
 
     @ManyToOne(fetch = FetchType.LAZY)
