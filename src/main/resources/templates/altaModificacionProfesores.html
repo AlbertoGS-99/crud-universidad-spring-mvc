@@ -31,7 +31,6 @@
                 max-width: 640px;
             }
 
-            /* Campos */
             .field { margin-bottom: 1.25rem; }
 
             label {
@@ -69,7 +68,6 @@
 
             select option { background: #242422; }
 
-            /* Error */
             .error {
                 font-size: 12px;
                 color: #F09595;
@@ -79,14 +77,12 @@
                 gap: 4px;
             }
 
-            /* Grid dos columnas */
             .two-col {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: 1rem;
             }
 
-            /* Género */
             .section-label {
                 font-size: 11px;
                 font-weight: 500;
@@ -114,14 +110,12 @@
                 cursor: pointer;
             }
 
-            /* Divisor */
             .divider {
                 border: none;
                 border-top: 0.5px solid rgba(255,255,255,0.08);
                 margin: 1.5rem 0;
             }
 
-            /* Upload */
             .upload-area {
                 border: 0.5px dashed rgba(255,255,255,0.15);
                 border-radius: 8px;
@@ -143,7 +137,6 @@
 
             .upload-area span { font-size: 13px; color: #555552; }
 
-            /* Imagen previa */
             .foto-preview {
                 margin-top: 12px;
                 border-radius: 8px;
@@ -154,7 +147,6 @@
 
             .foto-preview img { width: 100%; display: block; }
 
-            /* Botones */
             .footer-actions {
                 display: flex;
                 justify-content: flex-end;
@@ -203,7 +195,6 @@
 
                 <input type="hidden" th:field="*{id}">
 
-                <!-- Nombre y primer apellido -->
                 <div class="two-col">
                     <div class="field">
                         <label for="nombre">Nombre</label>
@@ -223,7 +214,6 @@
                     </div>
                 </div>
 
-                <!-- Segundo apellido -->
                 <div class="field">
                     <label for="segundoApellido">Segundo apellido
                         <span class="optional">(opcional)</span>
@@ -235,14 +225,14 @@
                        th:errors="*{segundoApellido}">Apellido inválido</p>
                 </div>
 
-                <!-- Fecha y facultad -->
+                
                 <div class="two-col">
                     <div class="field">
-                        <label for="fechaMatriculacion">Fecha de matriculación</label>
-                        <input type="date" id="fechaMatriculacion" th:field="*{fechaMatriculacion}">
-                        <p th:if="${#fields.hasErrors('fechaMatriculacion')}"
-                           th:class="${#fields.hasErrors('fechaMatriculacion')} ? error"
-                           th:errors="*{fechaMatriculacion}">Fecha inválida</p>
+                        <label for="fechadeAltaenlaFacultad">Fecha de Alta en la Facultad</label>
+                        <input type="date" id="fechadeAltaenlaFacultad" th:field="*{fechadeAltaenlaFacultad}" ... />>
+                        <p th:if="${#fields.hasErrors('fechadeAltaenlaFacultad')}"
+                           th:class="${#fields.hasErrors('fechadeAltaenlaFacultad')} ? error"
+                           th:errors="*{fechadeAltaenlaFacultad}">Fecha inválida</p>
                     </div>
                     <div class="field">
                         <label for="facultades">Facultad</label>
@@ -255,7 +245,7 @@
                     </div>
                 </div>
 
-                <!-- Género -->
+               
                 <div class="field">
                     <div class="section-label">Género</div>
                     <div class="radio-group">
@@ -276,7 +266,7 @@
 
                 <hr class="divider">
 
-                <!-- Imagen -->
+              
                 <div class="field">
                     <label>Imagen del profesor</label>
                     <label for="file" class="upload-area">
@@ -288,12 +278,12 @@
                     </label>
                 </div>
 
-                <!-- Foto previa si existe -->
+                
                 <div class="foto-preview" th:if="${profesor.fotodelProfesor != null}">
                     <img th:src="@{/imagenes/} + ${profesor.fotodelProfesor}" alt="Foto del profesor">
                 </div>
 
-                <!-- Acciones -->
+                
                 <div class="footer-actions">
                     <a class="btn-cancel" th:href="@{/profesores/listar}">Cancelar</a>
                     <input type="submit" class="btn-submit" value="Guardar profesor">

@@ -40,7 +40,7 @@ public class ProfesorController {
 
         model.addAttribute("profesores", profesorService.getAllProfesores());
 
-		return "listaEstudiantes";
+		return "listadoProfesores";
     }
     
     @GetMapping("/alta")
@@ -49,7 +49,7 @@ public class ProfesorController {
         
         model.addAttribute("facultades", facultadService.getAllFacultades());
 
-        return "formularioAltaModificacion";
+        return "altaModificacionProfesores";
     }
     
 	@PostMapping("/persistir")
@@ -64,7 +64,7 @@ public class ProfesorController {
 
             model.addAttribute("facultades", facultadService.getAllFacultades());
             
-            return "formularioAltaModificacion";
+            return "altaModificacionProfesores";
 
         }
 
@@ -121,7 +121,7 @@ public class ProfesorController {
 
 		}
 
-		return "formularioAltaModificacion";
+		return "altaModificacionProfesores";
 	}
 
     @GetMapping("/delete/{id}")
