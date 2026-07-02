@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <h1>Formulario de Alta o Modificacion</h1>
+    <h1>Alta / Modificación de Profesor</h1>
     <fieldset>
         <legend>Formulario</legend>
         <form th:action="@{/profesores/persistir}" method="post" th:object="${profesor}" enctype="multipart/form-data">
@@ -23,7 +23,7 @@
                     <div class="two-col">
                         <div class="field">
                             <label for="nombre">Nombre</label>
-                            <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ej. Ana" required>
+                            <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ej. Maria" required>
                             <p th:if="${#fields.hasErrors('nombre')}" th:class="${#fields.hasErrors('nombre')} ? error"
                                 th:errors="*{nombre}">Nombre inválido</p>
                         </div>
