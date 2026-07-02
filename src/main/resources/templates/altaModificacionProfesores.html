@@ -1,296 +1,114 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>Alta / Modificación de Profesor</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-        <style>
-            *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-            body {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                background: #0f0f0e;
-                min-height: 100vh;
-                padding: 2.5rem 2rem;
-                color: #e8e6e0;
-            }
+<head>
+    <meta charset="UTF-8">
+    <title>Alta / Modificación de Profesor</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 
-            h1 {
-                font-size: 22px;
-                font-weight: 500;
-                margin-bottom: 2rem;
-                color: #f0ede6;
-                max-width: 640px;
-            }
+</head>
 
-            .card {
-                background: #1a1a18;
-                border: 0.5px solid rgba(255,255,255,0.08);
-                border-radius: 14px;
-                padding: 1.75rem;
-                max-width: 640px;
-            }
+<body>
 
-            .field { margin-bottom: 1.25rem; }
+    <h1>Alta / modificación de profesor</h1>
 
-            label {
-                display: block;
-                font-size: 13px;
-                color: #888780;
-                margin-bottom: 5px;
-                font-weight: 500;
-            }
+    <div class="card">
+        <form th:action="@{/profesores/persistir}" method="post" th:object="${profesor}" enctype="multipart/form-data">
 
-            .optional { font-weight: 400; color: #555552; }
+            <input type="hidden" th:field="*{id}">
 
-            input[type="text"],
-            input[type="date"],
-            select {
-                width: 100%;
-                padding: 8px 11px;
-                font-size: 14px;
-                border: 0.5px solid rgba(255,255,255,0.12);
-                border-radius: 8px;
-                background: #242422;
-                color: #e8e6e0;
-                outline: none;
-                transition: border-color 0.15s;
-                color-scheme: dark;
-            }
-
-            input[type="text"]::placeholder { color: #555552; }
-
-            input[type="text"]:focus,
-            input[type="date"]:focus,
-            select:focus {
-                border-color: #378ADD;
-            }
-
-            select option { background: #242422; }
-
-            .error {
-                font-size: 12px;
-                color: #F09595;
-                margin-top: 4px;
-                display: flex;
-                align-items: center;
-                gap: 4px;
-            }
-
-            .two-col {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 1rem;
-            }
-
-            .section-label {
-                font-size: 11px;
-                font-weight: 500;
-                color: #888780;
-                letter-spacing: 0.05em;
-                text-transform: uppercase;
-                margin-bottom: 10px;
-            }
-
-            .radio-group { display: flex; gap: 1.5rem; }
-
-            .radio-item {
-                display: flex;
-                align-items: center;
-                gap: 7px;
-                font-size: 14px;
-                cursor: pointer;
-                color: #c8c6c0;
-            }
-
-            .radio-item input {
-                accent-color: #378ADD;
-                width: 16px;
-                height: 16px;
-                cursor: pointer;
-            }
-
-            .divider {
-                border: none;
-                border-top: 0.5px solid rgba(255,255,255,0.08);
-                margin: 1.5rem 0;
-            }
-
-            .upload-area {
-                border: 0.5px dashed rgba(255,255,255,0.15);
-                border-radius: 8px;
-                padding: 1.5rem;
-                text-align: center;
-                background: #242422;
-                cursor: pointer;
-                transition: background 0.15s;
-            }
-
-            .upload-area:hover { background: #2c2c2a; }
-
-            .upload-area i {
-                font-size: 24px;
-                color: #555552;
-                display: block;
-                margin-bottom: 6px;
-            }
-
-            .upload-area span { font-size: 13px; color: #555552; }
-
-            .foto-preview {
-                margin-top: 12px;
-                border-radius: 8px;
-                overflow: hidden;
-                border: 0.5px solid rgba(255,255,255,0.08);
-                max-width: 160px;
-            }
-
-            .foto-preview img { width: 100%; display: block; }
-
-            .footer-actions {
-                display: flex;
-                justify-content: flex-end;
-                margin-top: 1.75rem;
-                gap: 10px;
-            }
-
-            .btn-cancel {
-                padding: 9px 18px;
-                font-size: 14px;
-                border-radius: 8px;
-                border: 0.5px solid rgba(255,255,255,0.12);
-                background: transparent;
-                color: #888780;
-                cursor: pointer;
-                transition: background 0.15s;
-                text-decoration: none;
-                display: inline-flex;
-                align-items: center;
-            }
-
-            .btn-cancel:hover { background: #242422; }
-
-            .btn-submit {
-                padding: 9px 20px;
-                font-size: 14px;
-                border-radius: 8px;
-                border: none;
-                background: #378ADD;
-                color: #ffffff;
-                cursor: pointer;
-                font-weight: 500;
-                transition: opacity 0.15s;
-            }
-
-            .btn-submit:hover { opacity: 0.88; }
-        </style>
-    </head>
-    <body>
-
-        <h1>Alta / modificación de profesor</h1>
-
-        <div class="card">
-            <form th:action="@{/profesores/persistir}" method="post"
-                  th:object="${profesor}" enctype="multipart/form-data">
-
-                <input type="hidden" th:field="*{id}">
-
-                <div class="two-col">
-                    <div class="field">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" th:field="*{nombre}"
-                               placeholder="Ej. Ana" required>
-                        <p th:if="${#fields.hasErrors('nombre')}"
-                           th:class="${#fields.hasErrors('nombre')} ? error"
-                           th:errors="*{nombre}">Nombre inválido</p>
-                    </div>
-                    <div class="field">
-                        <label for="primerApellido">Primer apellido</label>
-                        <input type="text" id="primerApellido" th:field="*{primerApellido}"
-                               placeholder="Ej. García" required>
-                        <p th:if="${#fields.hasErrors('primerApellido')}"
-                           th:class="${#fields.hasErrors('primerApellido')} ? error"
-                           th:errors="*{primerApellido}">Apellido inválido</p>
-                    </div>
-                </div>
-
+            <div class="two-col">
                 <div class="field">
-                    <label for="segundoApellido">Segundo apellido
-                        <span class="optional">(opcional)</span>
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ej. Ana" required>
+                    <p th:if="${#fields.hasErrors('nombre')}" th:class="${#fields.hasErrors('nombre')} ? error"
+                        th:errors="*{nombre}">Nombre inválido</p>
+                </div>
+                <div class="field">
+                    <label for="primerApellido">Primer apellido</label>
+                    <input type="text" id="primerApellido" th:field="*{primerApellido}" placeholder="Ej. García"
+                        required>
+                    <p th:if="${#fields.hasErrors('primerApellido')}"
+                        th:class="${#fields.hasErrors('primerApellido')} ? error" th:errors="*{primerApellido}">Apellido
+                        inválido</p>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="segundoApellido">Segundo apellido
+                    <span class="optional">(opcional)</span>
+                </label>
+                <input type="text" id="segundoApellido" th:field="*{segundoApellido}" placeholder="Ej. López">
+                <p th:if="${#fields.hasErrors('segundoApellido')}"
+                    th:class="${#fields.hasErrors('segundoApellido')} ? error" th:errors="*{segundoApellido}">Apellido
+                    inválido</p>
+            </div>
+
+
+            <div class="two-col">
+                <div class="field">
+                    <label for="fechadeAltaenlaFacultad">Fecha de Alta en la Facultad</label>
+                    <input type="date" id="fechadeAltaenlaFacultad" th:field="*{fechadeAltaenlaFacultad}">
+                    <p th:if="${#fields.hasErrors('fechadeAltaenlaFacultad')}"
+                        th:class="${#fields.hasErrors('fechadeAltaenlaFacultad')} ? error"
+                        th:errors="*{fechadeAltaenlaFacultad}">Fecha inválida</p>
+                </div>
+                <div class="field">
+                    <label for="facultades">Facultad</label>
+                    <select id="facultades" name="facultad" th:field="*{facultad}">
+                        <option th:each="facultad : ${facultades}" th:value="${facultad.id}"
+                            th:text="${facultad.nombre}"></option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="field">
+                <div class="section-label">Género</div>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="genero" id="hombre" value="HOMBRE" th:field="*{genero}"> Hombre
                     </label>
-                    <input type="text" id="segundoApellido" th:field="*{segundoApellido}"
-                           placeholder="Ej. López">
-                    <p th:if="${#fields.hasErrors('segundoApellido')}"
-                       th:class="${#fields.hasErrors('segundoApellido')} ? error"
-                       th:errors="*{segundoApellido}">Apellido inválido</p>
-                </div>
-
-                
-                <div class="two-col">
-                    <div class="field">
-                        <label for="fechadeAltaenlaFacultad">Fecha de Alta en la Facultad</label>
-                        <input type="date" id="fechadeAltaenlaFacultad" th:field="*{fechadeAltaenlaFacultad}" ... />>
-                        <p th:if="${#fields.hasErrors('fechadeAltaenlaFacultad')}"
-                           th:class="${#fields.hasErrors('fechadeAltaenlaFacultad')} ? error"
-                           th:errors="*{fechadeAltaenlaFacultad}">Fecha inválida</p>
-                    </div>
-                    <div class="field">
-                        <label for="facultades">Facultad</label>
-                        <select id="facultades" name="facultad" th:field="*{facultad}">
-                            <option value="">Seleccionar facultad</option>
-                            <option th:each="facultad : ${facultades}"
-                                    th:value="${facultad.id}"
-                                    th:text="${facultad.nombre}"></option>
-                        </select>
-                    </div>
-                </div>
-
-               
-                <div class="field">
-                    <div class="section-label">Género</div>
-                    <div class="radio-group">
-                        <label class="radio-item">
-                            <input type="radio" name="genero" id="hombre"
-                                   value="HOMBRE" th:field="*{genero}"> Hombre
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" name="genero" id="mujer"
-                                   value="MUJER" th:field="*{genero}"> Mujer
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" name="genero" id="otro"
-                                   value="OTRO" th:field="*{genero}"> Otro
-                        </label>
-                    </div>
-                </div>
-
-                <hr class="divider">
-
-              
-                <div class="field">
-                    <label>Imagen del profesor</label>
-                    <label for="file" class="upload-area">
-                        <i class="ti ti-photo-up" aria-hidden="true"></i>
-                        <span>Haz clic para seleccionar una imagen</span>
-                        <input type="file" id="file" name="file"
-                               th:value="${foto}"
-                               style="display:none;">
+                    <label class="radio-item">
+                        <input type="radio" name="genero" id="mujer" value="MUJER" th:field="*{genero}"> Mujer
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="genero" id="otro" value="OTRO" th:field="*{genero}"> Otro
                     </label>
                 </div>
+            </div>
 
-                
-                <div class="foto-preview" th:if="${profesor.fotodelProfesor != null}">
-                    <img th:src="@{/imagenes/} + ${profesor.fotodelProfesor}" alt="Foto del profesor">
-                </div>
+            <div>
+                <label for="salario">Salario:</label>
+                <input type="text" id="salario" name="salario" th:field="*{salario}">
+            </div>
 
-                
-                <div class="footer-actions">
-                    <a class="btn-cancel" th:href="@{/profesores/listar}">Cancelar</a>
-                    <input type="submit" class="btn-submit" value="Guardar profesor">
-                </div>
+            <hr class="divider">
 
-            </form>
-        </div>
 
-    </body>
+            <div class="field">
+                <label>Imagen del profesor</label>
+                <label for="file" class="upload-area">
+                    <i class="ti ti-photo-up" aria-hidden="true"></i>
+                    <span>Haz clic para seleccionar una imagen</span>
+                    <input type="file" id="file" name="file"  style="display:none;">
+                </label>
+            </div>
+
+
+            <div class="foto-preview" th:if="${profesor.fotodelProfesor != null}">
+                <img th:src="@{/imagenes/} + ${profesor.fotodelProfesor}" alt="Foto del profesor">
+            </div>
+
+
+            <div class="footer-actions">
+                <a class="btn-cancel" th:href="@{/profesores/listar}">Cancelar</a>
+                <input type="submit" class="btn-submit" value="Guardar profesor">
+            </div>
+
+        </form>
+    </div>
+
+</body>
+
 </html>

@@ -1,6 +1,7 @@
 package com.example.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,9 +17,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -68,8 +69,11 @@ public class Profesor implements Serializable {
 
 
     @DateTimeFormat(pattern ="yyyy-MM-dd")
-    @FutureOrPresent(message = "La fecha de alta en la facultad no puede ser inferior a la fecha actual")
+    @PastOrPresent(message = "La fecha de alta en la facultad no puede ser posterior a la fecha actual")
     private LocalDate fechadeAltaenlaFacultad;
+
+    @NotNull(message = "El campo salario no puede estar vacio")
+    private BigDecimal salario;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Facultad facultad;

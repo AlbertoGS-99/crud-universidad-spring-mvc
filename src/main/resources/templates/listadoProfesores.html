@@ -5,200 +5,7 @@
     <meta charset="UTF-8">
     <title>Listado de profesores</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-    <style>
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0f0f0e;
-            min-height: 100vh;
-            padding: 2.5rem 2rem;
-            color: #e8e6e0;
-        }
-
-        .page {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-        }
-
-        .header h1 {
-            font-size: 22px;
-            font-weight: 500;
-            color: #f0ede6;
-        }
-
-        .btn-alta {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            padding: 8px 14px;
-            border-radius: 8px;
-            border: 0.5px solid rgba(255, 255, 255, 0.15);
-            color: #e8e6e0;
-            text-decoration: none;
-            background: #1a1a18;
-            cursor: pointer;
-            transition: background 0.15s;
-        }
-
-        .btn-alta:hover {
-            background: #242422;
-        }
-
-        .btn-alta i {
-            font-size: 15px;
-        }
-
-        .table-wrap {
-            border: 0.5px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            overflow: hidden;
-            background: #1a1a18;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-            table-layout: fixed;
-        }
-
-        thead {
-            background: #242422;
-        }
-
-        thead th {
-            padding: 11px 14px;
-            text-align: left;
-            font-weight: 500;
-            font-size: 11px;
-            color: #888780;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
-        }
-
-        tbody tr {
-            border-bottom: 0.5px solid rgba(255, 255, 255, 0.06);
-            transition: background 0.1s;
-        }
-
-        tbody tr:last-child {
-            border-bottom: none;
-        }
-
-        tbody tr:hover {
-            background: #242422;
-        }
-
-        tbody td {
-            padding: 11px 14px;
-            color: #c8c6c0;
-            vertical-align: middle;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .col-nombre {
-            width: 14%;
-        }
-
-        .col-ap1 {
-            width: 14%;
-        }
-
-        .col-ap2 {
-            width: 14%;
-        }
-
-        .col-fecha {
-            width: 15%;
-        }
-
-        .col-genero {
-            width: 10%;
-        }
-
-        .col-actions {
-            width: 33%;
-        }
-
-        .badge-genero {
-            display: inline-block;
-            font-size: 11px;
-            padding: 2px 9px;
-            border-radius: 99px;
-            font-weight: 500;
-        }
-
-        .badge-m {
-            background: #0C447C;
-            color: #B5D4F4;
-        }
-
-        .badge-f {
-            background: #72243E;
-            color: #F4C0D1;
-        }
-
-        .actions {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-        }
-
-        .btn-action {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 12px;
-            padding: 4px 9px;
-            border-radius: 8px;
-            border: 0.5px solid rgba(255, 255, 255, 0.12);
-            color: #888780;
-            text-decoration: none;
-            background: transparent;
-            cursor: pointer;
-            transition: all 0.15s;
-            white-space: nowrap;
-        }
-
-        .btn-action:hover {
-            background: #242422;
-            color: #e8e6e0;
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .btn-action i {
-            font-size: 13px;
-        }
-
-        .btn-delete {
-            color: #F09595;
-            border-color: #791F1F;
-        }
-
-        .btn-delete:hover {
-            background: #2a1515;
-            border-color: #A32D2D;
-            color: #F7C1C1;
-        }
-    </style>
 </head>
 
 <body>
@@ -221,6 +28,7 @@
                         <th class="col-ap2">Segundo apellido</th>
                         <th class="col-fecha">Matriculación</th>
                         <th class="col-genero">Género</th>
+                        <th class="col-salario">Salario</th>
                         <th class="col-actions">Acciones</th>
                     </tr>
                 </thead>
@@ -230,12 +38,14 @@
                         <td th:text="${profesor.primerApellido}"></td>
                         <td th:text="${profesor.segundoApellido}"></td>
                         <td th:text="${profesor.fechadeAltaenlaFacultad}"></td>
+                        
                         <td>
                             <span th:if="${profesor.genero == 'MUJER'}" class="badge-genero badge-f"
                                 th:text="${profesor.genero}"></span>
                             <span th:unless="${profesor.genero == 'MUJER'}" class="badge-genero badge-m"
                                 th:text="${profesor.genero}"></span>
                         </td>
+                        <td th:text="${profesor.salario}"></td>
                         <td>
                             <div class="actions">
                                 <a class="btn-action" th:href="@{/profesores/detalles/{id}(id=${profesor.id})}">
