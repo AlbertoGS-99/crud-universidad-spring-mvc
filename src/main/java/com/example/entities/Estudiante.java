@@ -1,13 +1,15 @@
 package com.example.entities;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.example.model.Genero;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -16,6 +18,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
@@ -30,14 +33,14 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name ="profesores")
+@Table(name ="estudiantes")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
 @Builder
-public class Profesor implements Serializable {
+public class Estudiante implements Serializable {
     
     private static final long serialVersionUID = 1L;
 
@@ -62,22 +65,26 @@ public class Profesor implements Serializable {
     @Pattern(regexp = "^(|[A-ZÁÉÍÓÚÑ][a-záéíóúüñ]{2,}+(\s)?)+$", message = "El Segundo Apellido solo puede contener los caracteres de la A a la Z y su primer caracter a de ser una letra mayuscula (A-Z)")
     private String segundoApellido;
 
-   
 
     @Enumerated(EnumType.STRING)
     private Genero genero;
 
 
     @DateTimeFormat(pattern ="yyyy-MM-dd")
-    @FutureOrPresent(message = "La fecha de alta en la facultad no puede ser posterior a la fecha actual")
-    private LocalDate fechadeAltaenlaFacultad;
-
-    @NotNull(message = "El campo salario no puede estar vacio")
-    private BigDecimal salario;
-
+    @FutureOrPresent(message = "La fecha de Matriculacion no puede ser inferior a la fecha actual")
+    private LocalDate fechaMatriculacion;
+    
     @ManyToOne(fetch = FetchType.LAZY)
     private Facultad facultad;
 
-    private String FotodelProfesor;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "estudiante")
+    @Builder.Default
+    private Set<Telefono> telefonos = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "estudiante")
+    @Builder.Default
+    private Set<Correo> correos = new HashSet<>();
+
+    private String foto;
 
 }

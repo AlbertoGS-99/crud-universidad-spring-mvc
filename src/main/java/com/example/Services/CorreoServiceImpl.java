@@ -1,0 +1,56 @@
+package com.example.Services;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.example.dao.Correodao;
+import com.example.entities.Correo;
+import com.example.entities.Estudiante;
+
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Service
+public class CorreoServiceImpl implements CorreoService {
+
+    private final Correodao correoDao;
+
+    @Override
+    public List<Correo> getAllCorreos() {
+
+        return correoDao.findAll();
+
+    }
+
+    @Override
+    public Correo saveCorreo(Correo correo) {
+
+        return correoDao.save(correo);
+
+    }
+
+    @Override
+    public boolean existsByEstudiante(Estudiante estudiante) {
+
+        return correoDao.existsByEstudiante(estudiante);
+
+    }
+
+    @Override
+    @Transactional
+    public void deleteByEstudiante(Estudiante estudiante) {
+
+        correoDao.deleteByEstudiante(estudiante);
+    
+    }
+
+    @Override
+    public List<Correo> findByEstudiante(Estudiante estudiante) {
+
+        return correoDao.findByEstudiante(estudiante);
+    
+    }
+
+}

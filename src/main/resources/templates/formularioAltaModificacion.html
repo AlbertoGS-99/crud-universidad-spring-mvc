@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Formulario</title>
+		<style>
+			.error{
+				color: red;
+				font-weight: bold;
+			}
+		</style>
+    </head>
+    <body>
+        <h1>Formulario de Alta o Modificacion</h1>
+		<fieldset>
+			<legend>Formulario</legend>
+			<form th:action="@{/estudiantes/persistir}" method="post" th:object="${estudiante}" enctype="multipart/form-data">
+				<input type="hidden" th:field="*{id}">
+				<div>
+					<label for="nombre">Nombre: </label> 
+					<input type="text" id="nombre" th:field="*{nombre}" required>
+					<p th:if="${#fields.hasErrors('nombre')}" 
+						th:class="${#fields.hasErrors('nombre')} ? error"
+						th:errors="*{nombre}">Nombre Invalido</p>
+				</div>
+				<div>
+					<label for="primerApellido">Primer Apellido: </label> 
+					<input type="text" id="primerApellido" th:field="*{primerApellido}" required>
+					<p th:if="${#fields.hasErrors('primerApellido')}" 
+						th:class="${#fields.hasErrors('primerApellido')} ? error"
+						th:errors="*{primerApellido}">Apellido Invalido</p>
+				</div>
+				<div>
+					<label for="segundoApellido">Segundo Apellido: </label> 
+					<input type="text" id="segundoApellido" name="segundoApellido" th:field="*{segundoApellido}">
+					<p th:if="${#fields.hasErrors('segundoApellido')}" 
+						th:class="${#fields.hasErrors('segundoApellido')} ? error"
+						th:errors="*{segundoApellido}">Nombre Invalido</p>
+				</div>
+				<div>
+					<label for="fechaMatriculacion">Fecha de Matricualcion: </label> 
+					<input type="date" name="fechaMatriculacion" id="fechaMatriculacion" th:field="*{fechaMatriculacion}">
+					<p th:if="${#fields.hasErrors('fechaMatriculacion')}" 
+						th:class="${#fields.hasErrors('fechaMatriculacion')} ? error"
+						th:errors="*{fechaMatriculacion}">Apellido Invalido</p>
+				</div>
+				<div>
+					<fieldset>
+						<legend>Genero</legend>
+						<label for="hombre">Hombre</label><input type="radio" name="genero" id="hombre" value="HOMBRE" th:field="*{genero}">
+						<br>
+						<label for="mujer">Mujer</label><input type="radio" name="genero" id="mujer" value="MUJER" th:field="*{genero}">
+						<br>
+						<label for="otro">Otro</label><input type="radio" name="genero" id="otro" value="OTRO" th:field="*{genero}">
+					</fieldset>
+				</div>
+				<div>
+					<label for="facultades">Facultades</label>
+					<select id="facultades" name="facultad" th:field="*{facultad}">
+						<option value=""></option>
+						<option th:each="facultad : ${facultades}" th:value="${facultad.id}" th:text="${facultad.nombre}"></option>
+					</select>
+				</div>
+				<div>
+					<label for="telefonos">Telefonos: </label> 
+					<input type="text" id="telefonos" name="numerostlf" th:value="${telefonos}" placeholder="Mas de 1 separado por ;">
+				</div>
+				<div>
+					<label for="mail">Correos: </label> 
+					<input type="text" id="mail" name="mail" th:value="${correos}" placeholder="Mas de 1 separado por ;">
+				</div>
+				<div>
+					<label for="file">Imagen del empleado</label>
+					<br>
+					<input type="file" id="file" name="file" title="Seleccione la imagen del empleado" th:value="${foto}">
+				</div>
+				<div th:if="${estudiante.foto != null}">
+					<img th:src ="@{/imagenes/} + ${estudiante.foto}">
+				</div>
+				<input type="submit" value="Alta/Modificacion">
+			</form>
+		</fieldset>
+    </body>
+</html>

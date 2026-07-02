@@ -86,26 +86,16 @@
             <hr class="divider">
 
 
-            <div class="field">
-                <label>Imagen del profesor</label>
-                <label for="file" class="upload-area">
-                    <i class="ti ti-photo-up" aria-hidden="true"></i>
-                    <span>Haz clic para seleccionar una imagen</span>
-                    <input type="file" id="file" name="file"  style="display:none;">
-                </label>
+            <div>
+                <label for="file">Imagen del profesor</label>
+                <br>
+                <input type="file" id="file" name="file" title="Seleccione la imagen del profesor" th:value="${foto}">
+            </div>
+            <div th:if="${profesor.fotodelProfesor != null}">
+                <img th:src="@{/imagenes/} + ${profesor.fotodelProfesor}">
             </div>
 
-
-            <div class="foto-preview" th:if="${profesor.fotodelProfesor != null}">
-                <img th:src="@{/imagenes/} + ${profesor.fotodelProfesor}" alt="Foto del profesor">
-            </div>
-
-
-            <div class="footer-actions">
-                <a class="btn-cancel" th:href="@{/profesores/listar}">Cancelar</a>
-                <input type="submit" class="btn-submit" value="Guardar profesor">
-            </div>
-
+            <input type="submit" value="Alta/Modificacion">
         </form>
     </div>
 
