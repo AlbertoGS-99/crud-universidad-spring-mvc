@@ -1,0 +1,16 @@
+package com.example.Services;
+
+import java.util.List;
+
+import com.example.entities.Profesor;
+
+public interface ProfesorService {
+
+    List<Profesor> getAllProfesores();
+    Profesor getProfesorById(int id);
+    Profesor saveProfesor(Profesor profesor);
+    void deleteProfesorById(int id);
+    void deleteProfesor(Profesor profesor);
+    Profesor updateProfesor(Profesor profesor);
+
+}

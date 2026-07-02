@@ -38,6 +38,6 @@ public class Facultad implements Serializable {
     private String nombre;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "facultad")
-    private List<Estudiante> estudiantes;
+    private List<Profesor> estudiantes;
 
 }
